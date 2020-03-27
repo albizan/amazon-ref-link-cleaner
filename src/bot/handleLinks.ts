@@ -113,16 +113,24 @@ async function generateUrlObjects(urls: Array<string>, ref: string): Promise<Arr
       return urlObject;
     } else {
       // Not an amazon link
-      const response = await shortner.post('', {
-        destination: url,
-        domain: { fullName: 'rebrand.ly' },
-      });
-      const urlObject: UrlObject = {
-        domain: getDomain(trueUrl),
-        original: url,
-        short: response.data.shortUrl,
-      };
-      return urlObject;
+      try {
+        let secureUrl = url;
+        if (!url.startsWith('https://')) {
+          secureUrl = `https://${url}`;
+        }
+        const response = await shortner.post('', {
+          destination: secureUrl,
+          domain: { fullName: 'rebrand.ly' },
+        });
+        const urlObject: UrlObject = {
+          domain: getDomain(trueUrl),
+          original: url,
+          short: response.data.shortUrl,
+        };
+        return urlObject;
+      } catch (error) {
+        console.log(error);
+      }
     }
   });
 
