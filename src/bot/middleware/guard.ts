@@ -1,6 +1,8 @@
 async function guard(ctx, next) {
-  // Guard all Commands
-  if (ctx.message?.text?.startsWith('/')) {
+  if (ctx.message?.text?.startsWith('/start')) {
+    next();
+  } else if (ctx.message?.text?.startsWith('/')) {
+    // Guard all Commands
     const requester_id = ctx.from.id;
     try {
       const administrators = await ctx.getChatAdministrators();

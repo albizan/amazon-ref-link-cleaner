@@ -16,5 +16,10 @@ export class Group {
   @Column({
     default: false,
   })
+  isActive: Boolean;
+
+  @Column({
+    default: false,
+  })
   isBanned: Boolean;
 }

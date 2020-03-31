@@ -13,6 +13,8 @@ const wizard = new WizardScene(
       currentGroup = new Group();
       currentGroup.id = id;
       currentGroup.title = title;
+      currentGroup.ref = '';
+      currentGroup.isActive = true;
       groupRepository.save(currentGroup);
     }
     ctx.reply('Digita il tuo ref code');
@@ -26,6 +28,14 @@ const wizard = new WizardScene(
       const currentGroup = await groupRepository.findOne({
         where: { id },
       });
+      if (text.startsWith('/')) {
+        ctx.reply('Il testo inserito non è valido, ripetere');
+        return;
+      }
+      if (!text.includes('-') || text.length < 4) {
+        ctx.reply('Il testo inserito non è valido, ripetere');
+        return;
+      }
       currentGroup.ref = text.trim();
       groupRepository.save(currentGroup);
       ctx.reply('Ref code salvato correttamente per questo gruppo');

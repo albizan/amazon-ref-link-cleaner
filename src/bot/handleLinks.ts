@@ -21,6 +21,9 @@ export async function handleTextSubType(ctx) {
   if (!currentGroup) {
     return;
   }
+  if (!currentGroup.isActive) {
+    return;
+  }
   if (currentGroup.isBanned) {
     return;
   }

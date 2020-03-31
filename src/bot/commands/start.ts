@@ -1,6 +1,8 @@
 function setupStartCommand(bot) {
   bot.command('start', async ctx => {
-    ctx.reply('Per iniziare la procedura, aggiungi questo BOT ad un tuo gruppo telegram e invia il comando /config come admin');
+    ctx.reply(
+      'Aggiungi questo BOT ad un gruppo e lancia il comando /launch per avviarlo oppure /stop fer spegnerlo.\nUsare il comando /config per impostare un tag referral di amazon'
+    );
   });
 }
 
