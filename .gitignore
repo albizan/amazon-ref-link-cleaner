@@ -5,6 +5,6 @@ build/
 tmp/
 temp/
 dist/
-
+volumes/
 docker-compose.yml
 .env
