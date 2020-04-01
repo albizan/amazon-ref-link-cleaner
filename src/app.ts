@@ -10,7 +10,7 @@ export default class App {
         url: process.env.DB_URL,
         synchronize: true,
         logging: false,
-        entities: ['./entity/*{.ts,.js}'],
+        entities: [__dirname + '/entity/*{.ts,.js}'],
       });
 
       bot.launch();
