@@ -73,18 +73,18 @@ export async function handleImageSubType(ctx) {
 }
 
 function extractUrlsFromText(entities, text): Array<string> {
-  const urlEntities = entities.filter(e => e.type === 'url');
-  return urlEntities.map(e => text.slice(e.offset, e.offset + e.length));
+  const urlEntities = entities.filter((e) => e.type === 'url');
+  return urlEntities.map((e) => text.slice(e.offset, e.offset + e.length));
 }
 
 async function generateUrlObjects(urls: Array<string>, ref: string): Promise<Array<UrlObject>> {
-  const urlObjects = urls.map(async url => {
+  const urlObjects = urls.map(async (url) => {
     let trueUrl = url;
     if (url.includes('amzn.to') || url.includes('voob.it')) {
       try {
         const response = await axios.get(url, {
-          validateStatus: function(status) {
-            return status == 301;
+          validateStatus: function (status) {
+            return status === 301 || status === 302;
           },
           maxRedirects: 0,
         });
@@ -155,7 +155,7 @@ function createCartUrl(urlObjects: Array<UrlObject>, ref: string) {
 
 function replaceLinks(text: string, urlObjects: Array<UrlObject>) {
   let message = text;
-  urlObjects.forEach(urlObj => {
+  urlObjects.forEach((urlObj) => {
     message = message.replace(urlObj.original, `<b><a href="${urlObj.short}"> Vedi su ${urlObj.domain}</a></b>`);
   });
 
